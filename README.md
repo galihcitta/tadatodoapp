@@ -1,5 +1,17 @@
 # todotada
 
+## About This Project
+
+Simple ToDoList App build using Nuxt.
+The purpose of this task is strengthen my knowledge about Vue and Nuxt
+
+## Feature
+
+- Add Todo
+- Update Todo
+- Remove Todo
+- Search Todo
+
 ## Build Setup
 
 ```bash
