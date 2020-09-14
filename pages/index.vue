@@ -1,73 +1,80 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        todotada
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <section class="container">
+    <h1 class="title">todotada</h1>
+    <ul>
+      <li v-for="(todo, index) in todos" :key="index">
+        <input :checked="todo.done" @change="toggle(todo)" type="checkbox" />
+        <span :class="{ done: todo.done }">{{ todo.text }} {{ getStringFromDate(todo.created) }}</span>
+        <button @click="removeTodo(todo)">remove</button>
+      </li>
+    </ul>
+    <p>
+      <input
+        :value="todoText"
+        @input="todoText = $event.target.value"
+        placeholder="✨What needs to be done?"
+      />
+      <button @click="addTodo">add</button>
+    </p>
+    <p>
+      <input
+        :value="searchText"
+        @input="searchText = $event.target.value"
+        placeholder="🔍Search your todo."
+      />
+    </p>
+  </section>
 </template>
 
 <script>
-export default {}
+import { mapMutations } from 'vuex'
+
+export default {
+  data() {
+    return {
+      todoText: '',
+      searchText: ''
+    }
+  },
+  computed: {
+    todos() {
+      if (this.searchText.length > 0) {
+        return this.$store.state.todos.list.filter((item) =>
+          item.text.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+      }
+      return this.$store.state.todos.list;
+    }
+  },
+  methods: {
+    addTodo() {
+      this.$store.commit("todos/add", this.todoText);
+      this.todoText = "";
+    },
+    ...mapMutations({
+      toggle: "todos/toggle",
+    }),
+    removeTodo(todo) {
+      this.$store.commit("todos/remove", todo);
+    },
+    getStringFromDate(date) {
+      return (
+        date.getFullYear() +
+        "-" +
+        ("00" + (date.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("00" + date.getDate()).slice(-2) +
+        " " +
+        ("00" + date.getHours()).slice(-2) +
+        ":" +
+        ("00" + date.getMinutes()).slice(-2) +
+        ":" +
+        ("00" + date.getSeconds()).slice(-2)
+      );
+    },
+  }
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
