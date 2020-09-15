@@ -14,7 +14,7 @@ The purpose of this task is strengthen my knowledge about Vue and Nuxt
 
 ## Application Screenshot
 
-![app1](https://ibb.co/TbMS3cN)
+![app1](https://i.ibb.co/MGk40nJ/Screenshot-from-2020-09-15-16-58-51.png)
 
 ## Build Setup
 
