@@ -3,7 +3,7 @@
     <h1 class="title">todotada</h1>
     <ul>
       <li v-for="(todo, index) in todos" :key="index">
-        <input :checked="todo.done" @change="toggle(todo)" type="checkbox" />
+        <input :checked="todo.done" @change="update(todo)" type="checkbox" />
         <span :class="{ done: todo.done }">{{ todo.text }} {{ getStringFromDate(todo.created) }}</span>
         <button @click="removeTodo(todo)">remove</button>
       </li>
@@ -52,7 +52,7 @@ export default {
       this.todoText = "";
     },
     ...mapMutations({
-      toggle: "todos/toggle",
+      update: "todos/update",
     }),
     removeTodo(todo) {
       this.$store.commit("todos/remove", todo);
