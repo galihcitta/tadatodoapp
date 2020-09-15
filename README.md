@@ -12,6 +12,10 @@ The purpose of this task is strengthen my knowledge about Vue and Nuxt
 - Remove Todo
 - Search Todo
 
+## Application Screenshot
+
+![app1](https://ibb.co/TbMS3cN)
+
 ## Build Setup
 
 ```bash
